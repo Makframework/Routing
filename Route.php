@@ -2,57 +2,48 @@
 
 namespace Makframework\Routing;
 
-
-use Makframework\Routing\Exceptions\RouteNotFoundException;
-
-class Routes
+class Route
 {
     /**
-     * routes
-     * @var array
+     * @var \Makframework\Routing\Resource
      */
-    private $routes = [];
+    private $resource;
 
-    public function __construct()
+    /**
+     * @var \Makframework\Routing\Middleware[]
+     */
+    private $middlewares = [];
+
+    /**
+     * Route constructor.
+     * @param Resource $resource
+     * @param array $middlewares
+     */
+    public function __construct(Resource $resource, array $middlewares)
     {
-
+        $this->resource = $resource;
+        $this->middlewares = $middlewares;
     }
 
     /**
-     * Add
-     * @param string $route
-     * @param string|callable $resource
+     * @return Resource
      */
-    public function add(string $route, $resource)
+    public function getResource(): Resource
     {
-        $this->routes[$route] = $resource;
+        return $this->resource;
     }
 
     /**
-     * @param string $route
-     * @return null|\Makframework\Routing\Resource
+     * @return Middleware[]
      */
-    public function get(string $route) : ?Resource
+    public function getMiddlewares(): array
     {
-        if($resource = $this->has($route)) return $resource;
-        throw new RouteNotFoundException("Route not found.");
+        return $this->middlewares;
     }
 
-    /**
-     * @param string $currentRoute
-     * @return bool|\Makframework\Routing\Resource
-     */
-    public function has(string $currentRoute)
+    public function addMiddleware(Middleware $middleware): void
     {
-        foreach ($this->routes as $route => $resource)
-        {
-            if(preg_match('#^'.$route.'$#', $currentRoute, $parameters))
-            {
-                array_shift($parameters);
-                return Resource($resource, $parameters);
-            }
-        }
-        return false;
+        $this->middlewares[] = $middleware;
     }
 
 }

@@ -3,7 +3,7 @@
 namespace Makframework\Routing\Exceptions;
 
 
-class RouteNotFoundException extends \RuntimeException
+class RouteNotFoundException extends RouterException
 {
 
 }
