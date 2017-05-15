@@ -1,0 +1,21 @@
+{
+    "name": "makframework/routing",
+    "description": "Http Routing",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Junior Ochei Ruiz",
+            "email": "mak.hmc@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+      "psr-4": {
+        "Makframework\\Routing\\": ""
+      }
+    },
+    "require": {
+        "makframework/http": "dev-master"
+    }
+}

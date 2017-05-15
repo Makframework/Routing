@@ -28,6 +28,10 @@ class Routes
         $this->routes[$route] = $resource;
     }
 
+    /**
+     * @param string $route
+     * @return null|\Makframework\Routing\Resource
+     */
     public function get(string $route) : ?Resource
     {
         if($resource = $this->has($route)) return $resource;
@@ -35,8 +39,8 @@ class Routes
     }
 
     /**
-     * Has
-     * @param string $route
+     * @param string $currentRoute
+     * @return bool|\Makframework\Routing\Resource
      */
     public function has(string $currentRoute)
     {
@@ -45,8 +49,7 @@ class Routes
             if(preg_match('#^'.$route.'$#', $currentRoute, $parameters))
             {
                 array_shift($parameters);
-                $this->routes[$route] = Resource($resource, $parameters);
-                return true;
+                return Resource($resource, $parameters);
             }
         }
         return false;
